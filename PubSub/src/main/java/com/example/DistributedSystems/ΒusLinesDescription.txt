@@ -1,0 +1,32 @@
+ΒusLines.txt
+------------
+Format: LineCode,LineId,DescriptionEnglish
+
+Perigrafi:
+LineCode: Unique id tis grammis
+LineId: Einai to busLineId i alliws to topic sto opoio anaferetai i ergasia
+DescriptionEnglish: To onoma tis grammis me latinikous xaraktires
+
+
+BusPositions.txt
+----------------
+Format: LineCode,RouteCode,vehicleId,latitude,longitude,timestampOfBusPosition
+
+Perigrafi:
+LineCode: Unique id tis grammis
+RouteCode: UniqueId diadromis lewforeiou, diaforetiko apo afetiria pros terma kai apo terma pros afetiria (px gia tin grammi 821-> 1804 "Marasleios-Nea Kypseli" kai 1805 gia "Nea Kypseli-Marasleio")
+vehicleId: Unique id tou lewforeiou pou ektelei tin grammi
+latitude: geografiko platos
+longitude: geografiko mikos
+timestampOfBusPosition: xroniki stigmi pou estali i thesi apo ton aisthitira sto lewforeio
+
+
+RouteCodes.txt
+--------------
+Format: RouteCode,LineCode,RouteType,DescriptionEnglish
+
+Perigrafi:
+RouteCode: UniqueId diadromis lewforeiou, diaforetiko apo afetiria pros terma kai apo terma pros afetiria (px gia tin grammi 821-> 1804 "Marasleios-Nea Kypseli" kai 1805 gia "Nea Kypseli-Marasleio")
+LineCode: Unique id tis grammis
+RouteType: an einai i diadromi apo afetiria pros terma i to anapodo
+DescriptionEnglish: To onoma tis grammis me latinikous xaraktires
