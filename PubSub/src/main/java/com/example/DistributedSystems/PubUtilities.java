@@ -19,6 +19,7 @@ class PubUtilities {
 
     static void CreateBuses() throws IOException, ParseException {
         BufferedReader in = new BufferedReader(new FileReader("PubSub\\src\\main\\java\\com\\example\\DistributedSystems\\busPositionsNew.txt"));
+
         String line = in.readLine();
         String [] characteristics = new String[6];
         while(line != null){
