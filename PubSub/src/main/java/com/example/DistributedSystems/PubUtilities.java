@@ -16,7 +16,6 @@ import java.util.*;
 
 class PubUtilities {
     private static ArrayList<RouteHelper> helpers = new ArrayList<>();
-
     static void CreateBuses() throws IOException, ParseException {
         BufferedReader in = new BufferedReader(new FileReader("PubSub\\src\\main\\java\\com\\example\\DistributedSystems\\busPositionsNew.txt"));
 
