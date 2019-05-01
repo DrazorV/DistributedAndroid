@@ -3,4 +3,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="search_title">Input Bus Line</string>
     <string name="search_hint">Type bus line</string>
+    <string name="search">Search</string>
+    <string name="search_location_here">Search Location Here</string>
 </resources>
