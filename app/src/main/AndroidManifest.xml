@@ -32,10 +32,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAfB6svnZWPuBl9ZkRs1H65I54fkQOF0pY" />
 
-
         <activity
             android:name=".MapsActivity"
             android:label="BusApp">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
