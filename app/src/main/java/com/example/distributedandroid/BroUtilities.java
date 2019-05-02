@@ -7,6 +7,7 @@
  */
 package com.example.distributedandroid;
 
+
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -14,9 +15,10 @@ import java.util.HashMap;
 
 
 class BroUtilities {
-    static void CreateBusLines(ArrayList<Topic> topics) {
+    static ArrayList<Topic> CreateBusLines(InputStream inputStream) {
+        ArrayList<Topic> topics = new ArrayList<>();
         try {
-            BufferedReader in = new BufferedReader(new FileReader("busLinesNew.txt"));
+            BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
             String line = in.readLine();
             String [] characteristics = new String[3];
             while(line != null){
@@ -34,6 +36,7 @@ class BroUtilities {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return topics;
     }
 
     static HashMap<String, ArrayList<Topic>> MD5(ArrayList<Topic> topics) {

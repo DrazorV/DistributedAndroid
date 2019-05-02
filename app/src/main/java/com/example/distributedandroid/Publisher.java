@@ -18,11 +18,14 @@ public class Publisher{
     private static ArrayList<Topic> topics = new ArrayList<>();
 
     public static void main(String[] args) throws IOException, ParseException {
-        BroUtilities.CreateBusLines(topics);
+        String current = new java.io.File( "." ).getCanonicalPath();
+        System.out.println(current);
+        InputStream inputStream = new FileInputStream("app\\src\\main\\assets\\busLinesNew.txt");
+        topics = BroUtilities.CreateBusLines(inputStream);
         PubUtilities.CreateNames();
         PubUtilities.CreateBuses();
         System.out.println("Waiting for clients to connect...");
-        int[] ports = {4321, 5432, 7654};
+        int[] ports = {4322, 5432, 7654};
         for (int i = 0; i < 3; i++ ){
             Thread t = new Thread(new PubThread(ports[i]));
             t.start();

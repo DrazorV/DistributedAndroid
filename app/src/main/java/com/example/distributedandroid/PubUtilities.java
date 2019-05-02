@@ -17,7 +17,7 @@ import java.util.*;
 class PubUtilities {
     private static ArrayList<RouteHelper> helpers = new ArrayList<>();
     static void CreateBuses() throws IOException, ParseException {
-        BufferedReader in = new BufferedReader(new FileReader("PubSub\\src\\main\\java\\com\\example\\DistributedSystems\\busPositionsNew.txt"));
+        BufferedReader in = new BufferedReader(new FileReader("app\\src\\main\\assets\\busPositionsNew.txt"));
 
         String line = in.readLine();
         String [] characteristics = new String[6];
@@ -42,7 +42,7 @@ class PubUtilities {
     }
 
     static void CreateNames() throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader("PubSub\\src\\main\\java\\com\\example\\DistributedSystems\\RouteCodesNew.txt"));
+        BufferedReader in = new BufferedReader(new FileReader("app\\src\\main\\assets\\RouteCodesNew.txt"));
         String line = in.readLine();
         String [] characteristics = new String[4];
         while(line != null){
@@ -56,7 +56,7 @@ class PubUtilities {
         }
         in.close();
 
-        in = new BufferedReader(new FileReader("PubSub\\src\\main\\java\\com\\example\\DistributedSystems\\busLinesNew.txt"));
+        in = new BufferedReader(new FileReader("app\\src\\main\\assets\\busLinesNew.txt"));
         line = in.readLine();
         while(line != null){
             int i = 0;

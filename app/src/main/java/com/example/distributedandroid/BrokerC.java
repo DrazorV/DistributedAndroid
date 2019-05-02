@@ -19,7 +19,6 @@ public  class BrokerC {
 
 
     public static void main(String[] args) throws IOException{
-        BroUtilities.CreateBusLines(topics);
         ServerSocket providerSocket = new ServerSocket(7654, 3);
         try {
             while (true) {

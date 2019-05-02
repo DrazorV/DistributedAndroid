@@ -20,7 +20,6 @@ public  class BrokerB {
 
 
     public static void main(String[] args) throws IOException{
-        BroUtilities.CreateBusLines(topics);
         ServerSocket providerSocket = new ServerSocket(5432, 3);
         System.out.println("Waiting for consumers to connect...");
         try {

@@ -18,8 +18,7 @@ public  class BrokerA {
 
 
     public static void main(String[] args) throws IOException{
-        BroUtilities.CreateBusLines(topics);
-        ServerSocket providerSocket = new ServerSocket(4321, 3);
+        ServerSocket providerSocket = new ServerSocket(4322, 3);
         System.out.println("Waiting for consumers to connect...");
         try {
             while (true) {
@@ -49,7 +48,7 @@ public  class BrokerA {
                         while (true) {
                             PrintWriter outToClient = new PrintWriter(connected.getOutputStream(), true);
                             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connected.getInputStream()));
-                            HashMap<String, ArrayList<Topic>> hashed = BroUtilities.MD5(topics);
+//                            HashMap<String, ArrayList<Topic>> hashed = BroUtilities.MD5(topics);
 //                            System.out.println("THE CLIENT" + " " + connected.getInetAddress() + ":" + connected.getPort() + " IS CONNECTED ");
 //                            outToClient.println("\n--------------------------------------------------------------------------\n");
 //                            outToClient.println("I am broker A and I am responsible for these keys");
@@ -61,9 +60,9 @@ public  class BrokerA {
 //                            outToClient.println("Done");
                             String inputLineId = inFromClient.readLine();
                             boolean temp2 = false;
-                            for (Topic topic : hashed.get("BrokerA")) if (topic.getLineId().equals(inputLineId)) temp2 = true;
+//                            for (Topic topic : hashed.get("BrokerA")) if (topic.getLineId().equals(inputLineId)) temp2 = true;
 
-                            if (temp2) {
+//                            if (temp2) {
                                 HashMap<String, Value> values;
                                 if (output.size() != 0) {
                                     for (Topic topic : output.keySet()) {
@@ -79,17 +78,16 @@ public  class BrokerA {
                                     outToClient.println("We couldn't find any buses on that line, please try other broker.");
                                 }
                                 outToClient.println("next");
-                            } else if (!inputLineId.toLowerCase().equals("bye")) {
-                                outToClient.println("I don't have information for the specific line, try a different broker.");
-                                outToClient.println("next");
-                            }
+//                            } else if (!inputLineId.toLowerCase().equals("bye")) {
+//                                outToClient.println("I don't have information for the specific line, try a different broker.");
+//                                outToClient.println("next");
+//                            }
                         }
                     } else if (inFromServer.toString().equals("Publisher")) {
                         try {
                             ObjectOutputStream out = new ObjectOutputStream(connected.getOutputStream());
                             out.writeObject("BrokerA");
                             output = BroUtilities.pull(in);
-                            System.out.println("SKILE");
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

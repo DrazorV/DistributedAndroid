@@ -30,48 +30,7 @@ public class ConsumerA {
             if (broker.toUpperCase().equals("B")) port = 5432;
             if (broker.toUpperCase().equals("C")) port = 7654;
 
-            try (Socket clientSocket = new Socket("localhost", port)) {
-                ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
-                out.writeObject("Consumer");
-                BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                String line = inFromServer.readLine();
-
-                while (temp) {
-                    PrintWriter outToServer = new PrintWriter(clientSocket.getOutputStream(), true);
-
-                    while (!line.equals("Done")) {
-                        System.out.println(line);
-                        line = inFromServer.readLine();
-                    }
-
-                    System.out.println("Type the bus lines you re interested in or type 'bye' to change broker.");
-
-                    String busline = input.nextLine();
-
-                    if (!busline.toLowerCase().equals("bye")) {
-                        outToServer.println(busline);
-                        String answer = inFromServer.readLine();
-
-                        while (!answer.equals("next")) {
-                            System.out.println(answer);
-                            answer = inFromServer.readLine();
-                        }
-                        line = inFromServer.readLine();
-                    } else {
-                        temp = false;
-                    }
-                }
-            } catch (ConnectException e) {
-                if (i == 10) {
-                    System.out.println("Connection with broker timed out, we couldn't find any broker.");
-                    break;
-                }
-                System.out.println("Broker is not online try again in a moment!");
-                i++;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
