@@ -5,7 +5,7 @@
 Μπρακούλιας Φίλιππος    3140137
 
  */
-package com.example.DistributedSystems;
+package com.example.distributedandroid;
 
 import java.io.*;
 import java.net.Socket;
@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class Publisher{
+public class Publisher{
     static ArrayList<Value> values = new ArrayList<>();
     private static ArrayList<Topic> topics = new ArrayList<>();
 

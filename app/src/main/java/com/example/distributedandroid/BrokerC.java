@@ -5,22 +5,22 @@
 Μπρακούλιας Φίλιππος    3140137
 
  */
-package com.example.DistributedSystems;
+package com.example.distributedandroid;
 
 import java.io.*;
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public  class BrokerA {
+public  class BrokerC {
     private static ArrayList<Topic> topics = new ArrayList<>();
 
 
     public static void main(String[] args) throws IOException{
         BroUtilities.CreateBusLines(topics);
-        ServerSocket providerSocket = new ServerSocket(4321, 3);
-        System.out.println("Waiting for consumers to connect...");
+        ServerSocket providerSocket = new ServerSocket(7654, 3);
         try {
             while (true) {
                 Socket connection = providerSocket.accept();
@@ -34,7 +34,7 @@ public  class BrokerA {
 
     public static class ComunicationWithConsumerThread implements Runnable {
         private Socket connected;
-        private volatile static HashMap<Topic,HashMap<String,Value>> output = new HashMap<>();
+        private volatile static HashMap<Topic,HashMap<String, Value>> output = new HashMap<>();
 
         ComunicationWithConsumerThread(Socket connected) {
             this.connected = connected;
@@ -52,16 +52,16 @@ public  class BrokerA {
                             BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connected.getInputStream()));
                             HashMap<String, ArrayList<Topic>> hashed = BroUtilities.MD5(topics);
                             outToClient.println("\n--------------------------------------------------------------------------\n");
-                            outToClient.println("I am broker A and I am responsible for these keys");
+                            outToClient.println("I am broker C and I am responsible for these keys");
+                            for (Topic topic : hashed.get("BrokerC")) outToClient.println(topic.getLineId());
+                            outToClient.println("Broker A is responsible for these Keys");
                             for (Topic topic : hashed.get("BrokerA")) outToClient.println(topic.getLineId());
                             outToClient.println("Broker B is responsible for these Keys");
                             for (Topic topic : hashed.get("BrokerB")) outToClient.println(topic.getLineId());
-                            outToClient.println("Broker C is responsible for these Keys");
-                            for (Topic topic : hashed.get("BrokerC")) outToClient.println(topic.getLineId());
                             outToClient.println("Done");
                             String inputLineId = inFromClient.readLine();
                             boolean temp2 = false;
-                            for (Topic topic : hashed.get("BrokerA")) if (topic.getLineId().equals(inputLineId)) temp2 = true;
+                            for (Topic topic : hashed.get("BrokerC")) if (topic.getLineId().equals(inputLineId)) temp2 = true;
 
                             if (temp2) {
                                 HashMap<String, Value> values;
@@ -87,7 +87,7 @@ public  class BrokerA {
                     } else if (inFromServer.toString().equals("Publisher")) {
                         try {
                             ObjectOutputStream out = new ObjectOutputStream(connected.getOutputStream());
-                            out.writeObject("BrokerA");
+                            out.writeObject("BrokerC");
                             output = BroUtilities.pull(in);
                         } catch (IOException e) {
                             e.printStackTrace();

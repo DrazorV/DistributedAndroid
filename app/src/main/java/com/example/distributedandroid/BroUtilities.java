@@ -5,7 +5,7 @@
 Μπρακούλιας Φίλιππος    3140137
 
  */
-package com.example.DistributedSystems;
+package com.example.distributedandroid;
 
 import java.io.*;
 import java.net.*;
@@ -14,20 +14,26 @@ import java.util.HashMap;
 
 
 class BroUtilities {
-    static void CreateBusLines(ArrayList<Topic> topics) throws IOException {
-        BufferedReader in = new BufferedReader(new FileReader("PubSub\\src\\main\\java\\com\\example\\DistributedSystems\\busLinesNew.txt"));
-        String line = in.readLine();
-        String [] characteristics = new String[3];
-        while(line != null){
-            int i = 0;
-            for (String word : line.split(",")) {
-                characteristics[i] = word;
-                i++;
+    static void CreateBusLines(ArrayList<Topic> topics) {
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("busLinesNew.txt"));
+            String line = in.readLine();
+            String [] characteristics = new String[3];
+            while(line != null){
+                int i = 0;
+                for (String word : line.split(",")) {
+                    characteristics[i] = word;
+                    i++;
+                }
+                topics.add(new Topic(characteristics[1].trim()));
+                line = in.readLine();
             }
-            topics.add(new Topic(characteristics[1].trim()));
-            line = in.readLine();
+            in.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        in.close();
     }
 
     static HashMap<String, ArrayList<Topic>> MD5(ArrayList<Topic> topics) {
@@ -58,7 +64,7 @@ class BroUtilities {
         return hashed;
     }
 
-    static HashMap<Topic,HashMap<String,Value>> pull(ObjectInputStream in) throws IOException, ClassNotFoundException{
+    static HashMap<Topic,HashMap<String, Value>> pull(ObjectInputStream in) throws IOException, ClassNotFoundException{
         HashMap<String,Value> input;
         HashMap<Topic,HashMap<String,Value>> output = new HashMap<>();
         try {

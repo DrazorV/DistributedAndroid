@@ -1,4 +1,4 @@
-package com.example.DistributedSystems;
+package com.example.distributedandroid;
 import java.io.Serializable;
 
 class Topic implements Serializable {

@@ -16,7 +16,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:hint="@string/search_location_here"
-            android:autofillHints="ee"
             android:inputType="" />
 
         <Button

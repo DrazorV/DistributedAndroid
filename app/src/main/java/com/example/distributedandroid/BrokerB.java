@@ -5,7 +5,8 @@
 Μπρακούλιας Φίλιππος    3140137
 
  */
-package com.example.DistributedSystems;
+package com.example.distributedandroid;
+
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -35,7 +36,7 @@ public  class BrokerB {
 
     public static class ComunicationWithConsumerThread implements Runnable {
         private Socket connected;
-        private volatile static HashMap<Topic,HashMap<String,Value>> output = new HashMap<>();
+        private volatile static HashMap<Topic,HashMap<String, Value>> output = new HashMap<>();
 
         ComunicationWithConsumerThread(Socket connected) {
             this.connected = connected;
