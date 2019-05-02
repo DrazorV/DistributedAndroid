@@ -67,7 +67,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         EditText locationSearch = findViewById(R.id.editText);
         String location = locationSearch.getText().toString();
         List<Address> addressList = null;
-        final boolean[] temp = {true};
         String broker = null;
         Thread t = new Thread(() -> hashed = BroUtilities.MD5(topics));
         t.start();
@@ -96,40 +95,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (broker.equals("BrokerB")) port = 5432;
         if (broker.equals("BrokerC")) port = 7654;
 
-        int finalPort = port;
-        new Thread(() ->{
-            try (Socket clientSocket = new Socket("localhost", finalPort)) {
-                ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
-                out.writeObject("Consumer");
-                BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-                String line = inFromServer.readLine();
-
-                while (temp[0]) {
-                    PrintWriter outToServer = new PrintWriter(clientSocket.getOutputStream(), true);
-
-                    System.out.println("Type the bus lines you re interested in or type 'bye' to change broker.");
-
-                    String busline = input.nextLine();
-
-                    if (!busline.toLowerCase().equals("bye")) {
-                        outToServer.println(busline);
-                        String answer = inFromServer.readLine();
-
-                        while (!answer.equals("next")) {
-                            System.out.println(answer);
-                            answer = inFromServer.readLine();
-                        }
-                        line = inFromServer.readLine();
-                    } else {
-                        temp[0] = false;
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).start();
-
+        Thread thread = new Thread(new connection(port));
+        thread.start();
 
         // location == busline
         // if busline exists get last spot from bus
@@ -148,4 +116,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    public class connection implements Runnable{
+
+        private int finalPort;
+
+        connection(int finalPort) {
+            this.finalPort = finalPort;
+        }
+
+        @Override
+        public void run() {
+            boolean temp = true;
+            while (temp) {
+                try (Socket clientSocket = new Socket("10.0.2.2", finalPort)) {
+                    ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
+                    out.writeObject("Consumer");
+                    BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                    String line;
+                    while (temp) {
+                        PrintWriter outToServer = new PrintWriter(clientSocket.getOutputStream(), true);
+                        System.out.println("Type the bus lines you re interested in or type 'bye' to change broker.");
+                        String busline = input.nextLine();
+                        if (!busline.toLowerCase().equals("bye")) {
+                            outToServer.println(busline);
+                            String answer = inFromServer.readLine();
+                            while (!answer.equals("next")) {
+                                System.out.println(answer);
+                                answer = inFromServer.readLine();
+                            }
+                            line = inFromServer.readLine();
+                        } else {
+                            temp = false;
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
