@@ -12,18 +12,21 @@ import java.net.Socket;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Publisher{
     static ArrayList<Value> values = new ArrayList<>();
-    private static ArrayList<Topic> topics = new ArrayList<>();
+    private static HashMap<String, ArrayList<Topic>> hashed;
+
 
     public static void main(String[] args) throws IOException, ParseException {
         String current = new java.io.File( "." ).getCanonicalPath();
         System.out.println(current);
-        InputStream inputStream = new FileInputStream("app\\src\\main\\assets\\busLinesNew.txt");
-        topics = BroUtilities.CreateBusLines(inputStream);
         PubUtilities.CreateNames();
         PubUtilities.CreateBuses();
+        InputStream inputStream = new FileInputStream("app\\src\\main\\assets\\busLinesNew.txt");
+        ArrayList<Topic> topics = BroUtilities.CreateBusLines(inputStream);
+        hashed = BroUtilities.MD5(topics);
         System.out.println("Waiting for clients to connect...");
         int[] ports = {4322, 5432, 7654};
         for (int i = 0; i < 3; i++ ){
@@ -54,25 +57,27 @@ public class Publisher{
                     if(inFromServer.toString().startsWith("Broker")) {
                         broker = inFromServer.toString().substring(6);
                         System.out.println("Got client " + broker + " !");
-                        for (Topic topic: topics){
-                            out.writeObject(topic);
-                            HashMap<String,Value> temp2 = new HashMap<>();
-                            for (Value value : values) {
-                                if (topic.getLineId().equals(value.getBus().getBuslineId())){
-
-                                }
-//                                    if (temp2.containsKey(value.getBus().getVehicleId())) {
-//                                        if (temp2.get(value.getBus().getVehicleId()).getBus().getTime().compareTo(value.getBus().getTime()) < 0)
-//                                            temp2.put(value.getBus().getVehicleId(), value);
-//                                    } else {
-//                                        temp2.put(value.getBus().getVehicleId(), value);
-//                                    }
+                        for (Value value: values){
+                            switch (port){
+                                case 4322:
+                                    for(Topic buslines: Objects.requireNonNull(hashed.get("BrokerA"))) {
+                                        if (buslines.getLineId().equals(value.getBus().getBuslineId())) out.writeObject(value);
+                                    }
+                                    break;
+                                case 5432:
+                                    for(Topic buslines: Objects.requireNonNull(hashed.get("BrokerB"))){
+                                        if (buslines.getLineId().equals(value.getBus().getBuslineId())) out.writeObject(value);
+                                    }
+                                    break;
+                                case 7654:
+                                    for(Topic buslines: Objects.requireNonNull(hashed.get("BrokerC"))){
+                                        if (buslines.getLineId().equals(value.getBus().getBuslineId())) out.writeObject(value);
+                                    }
+                                    break;
                             }
-                            out.writeObject(temp2);
                             Thread.sleep(1000);
                         }
                     }
-                    out.writeObject("Stop");
                 } catch (IOException | ClassNotFoundException | InterruptedException e) {
                     System.out.println("Connection with server timed out, we couldn't find what you asked for.");
                 }

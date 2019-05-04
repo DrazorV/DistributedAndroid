@@ -46,13 +46,8 @@ class BroUtilities {
         ArrayList<Topic> C = new ArrayList<>();
         int temp = 0;
         for (Topic topic: topics){
-            try {
-                temp = ipToLong(InetAddress.getLocalHost().getHostAddress());
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
-            int num = Integer.parseInt(topic.getLineId()) + temp + 4321;
-
+            temp = ipToLong("10.0.2.2");
+            int num = Integer.parseInt(topic.getLineId()) + temp;
             if(num%3 == 0){
                 A.add(topic);
             }else if(num%3 == 1){
@@ -67,31 +62,6 @@ class BroUtilities {
         return hashed;
     }
 
-    static HashMap<Topic,HashMap<String, Value>> pull(ObjectInputStream in) throws IOException, ClassNotFoundException{
-        HashMap<String,Value> input;
-        HashMap<Topic,HashMap<String,Value>> output = new HashMap<>();
-        try {
-            while (true) {
-                try {
-                    Object inFromServer;
-                    inFromServer = in.readObject();
-                    if(!inFromServer.equals("Stop")){
-                        Topic topic = (Topic) inFromServer;
-                        input = (HashMap<String,Value>) in.readObject();
-                        output.put(topic,input);
-                    }else{
-                        break;
-                    }
-                } catch (EOFException ignored) {
-
-                }
-            }
-        }catch (BindException | ConnectException e){
-            System.out.println("Couldn't connect to server");
-        }
-        return output;
-    }
-
     private static int ipToLong(String ipAddress) {
         String[] ipAddressInArray = ipAddress.split("\\.");
         int result = 0;
@@ -100,7 +70,6 @@ class BroUtilities {
             int power = 3 - i;
             int ip = Integer.parseInt(ipAddressInArray[i]);
             result += ip * Math.pow(256, power);
-
         }
         return result;
     }

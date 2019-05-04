@@ -71,8 +71,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         try {
             InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        } catch (Exception e) {
-            // TODO: handle exception
+        } catch (Exception ignored) {
+
         }
         Thread t2 = new Thread( () -> {
             for (Topic topic : topics) {
@@ -129,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void showToast(final String toast) {
         runOnUiThread(() -> {
             Toast t = Toast.makeText(MapsActivity.this, toast, Toast.LENGTH_SHORT);
-            t.setGravity(Gravity.CENTER, 0, 0);
+//            t.setGravity(Gravity.CENTER, 0, 0);
             t.show();
         });
     }
