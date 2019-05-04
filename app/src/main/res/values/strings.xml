@@ -4,5 +4,6 @@
     <string name="search_title">Input Bus Line</string>
     <string name="search_hint">Type bus line</string>
     <string name="search">Search</string>
-    <string name="search_location_here">Search Location Here</string>
+    <string name="search_location_here">Search Bus Line Here</string>
+    <string name="textview">We could not find what you asked for, it may be a problem with our servers.</string>
 </resources>

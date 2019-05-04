@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:hint="@string/search_location_here"
-            android:inputType="" />
+            android:inputType=""
+            android:autofillHints="Please enter the bus line number" />
 
         <Button
             android:id="@+id/search_button"
@@ -34,5 +35,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.viralandroid.googlemapsandroidapi.MapsActivity" />
-
 </LinearLayout>

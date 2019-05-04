@@ -52,7 +52,7 @@ public  class BrokerA {
                                     else outToClient.writeObject(values);
                                 }
                             }
-                        } else outToClient.writeObject("We couldn't find any buses on that line, please try other broker.");
+                        } else outToClient.writeObject(null);
                     } else if (inFromServer.toString().equals("Publisher")) {
                         try {
                             ObjectOutputStream out = new ObjectOutputStream(connected.getOutputStream());
