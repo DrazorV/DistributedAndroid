@@ -58,13 +58,15 @@ public class Publisher{
                             out.writeObject(topic);
                             HashMap<String,Value> temp2 = new HashMap<>();
                             for (Value value : values) {
-                                if (topic.getLineId().equals(value.getBus().getBuslineId()))
-                                    if (temp2.containsKey(value.getBus().getVehicleId())) {
-                                        if (temp2.get(value.getBus().getVehicleId()).getBus().getTime().compareTo(value.getBus().getTime()) < 0)
-                                            temp2.put(value.getBus().getVehicleId(), value);
-                                    } else {
-                                        temp2.put(value.getBus().getVehicleId(), value);
-                                    }
+                                if (topic.getLineId().equals(value.getBus().getBuslineId())){
+
+                                }
+//                                    if (temp2.containsKey(value.getBus().getVehicleId())) {
+//                                        if (temp2.get(value.getBus().getVehicleId()).getBus().getTime().compareTo(value.getBus().getTime()) < 0)
+//                                            temp2.put(value.getBus().getVehicleId(), value);
+//                                    } else {
+//                                        temp2.put(value.getBus().getVehicleId(), value);
+//                                    }
                             }
                             out.writeObject(temp2);
                             Thread.sleep(1000);
