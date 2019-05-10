@@ -1,8 +1,8 @@
-package com.example.distributedandroid;
+package com.example.DistributedSystems;
 import java.io.Serializable;
 import java.util.Date;
 
-class Bus implements Serializable {
+public class Bus implements Serializable {
     private String lineName;
     private String buslineId;
     private String lineNumber;
@@ -19,11 +19,11 @@ class Bus implements Serializable {
         this.buslineId = buslineId;
     }
 
-    String getLineNumber(){
+    public String getLineNumber(){
         return  lineNumber;
     }
 
-    String getRouteCode(){
+    public String getRouteCode(){
         return  routeCode;
     }
 
@@ -31,15 +31,15 @@ class Bus implements Serializable {
         return  vehicleId;
     }
 
-    Date getTime(){
+    public Date getTime(){
         return time;
     }
 
-    String getBuslineId() {
+    public String getBuslineId() {
         return buslineId;
     }
 
-    String getLineName() {
+    public String getLineName() {
         return lineName;
     }
 }

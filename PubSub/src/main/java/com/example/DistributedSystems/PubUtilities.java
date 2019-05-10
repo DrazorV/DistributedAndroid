@@ -4,7 +4,7 @@
 Μορφιαδάκης Εμμανουήλ   3150112
 Μπρακούλιας Φίλιππος    3140137
  */
-package com.example.distributedandroid;
+package com.example.DistributedSystems;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

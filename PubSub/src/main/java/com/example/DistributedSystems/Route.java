@@ -1,4 +1,4 @@
-package com.example.distributedandroid;
+package com.example.DistributedSystems;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ public class Route implements Serializable {
         this.RouteType = RouteType;
     }
 
-    String getLineCode(){
+    public String getLineCode(){
         return Integer.toString(LineCode);
     }
 

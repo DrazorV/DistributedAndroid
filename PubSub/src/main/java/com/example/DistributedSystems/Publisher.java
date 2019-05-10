@@ -5,7 +5,7 @@
 Μπρακούλιας Φίλιππος    3140137
 
  */
-package com.example.distributedandroid;
+package com.example.DistributedSystems;
 
 import java.io.*;
 import java.net.Socket;

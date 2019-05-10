@@ -4,18 +4,16 @@
 Μορφιαδάκης Εμμανουήλ   3150112
 Μπρακούλιας Φίλιππος    3140137
  */
-package com.example.distributedandroid;
+package com.example.DistributedSystems;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
-public  class BrokerB {
-    public static void main(String[] args) throws IOException{
-        ServerSocket providerSocket = new ServerSocket(5432, 3);
+public  class BrokerA {
+        public static void main(String[] args) throws IOException{
+        ServerSocket providerSocket = new ServerSocket(4322, 3);
         System.out.println("Waiting for consumers to connect...");
         try {
             while (true) {
@@ -31,6 +29,8 @@ public  class BrokerB {
     public static class ComunicationWithConsumerThread implements Runnable {
         private Socket connected;
         volatile static HashMap<String,Value> output = new HashMap<>();
+
+
         ComunicationWithConsumerThread(Socket connected) {
             this.connected = connected;
         }
@@ -53,7 +53,7 @@ public  class BrokerB {
                         } else outToClient.writeObject(null);
                     } else if (inFromServer.toString().equals("Publisher")) {
                         ObjectOutputStream out = new ObjectOutputStream(connected.getOutputStream());
-                        out.writeObject("BrokerB");
+                        out.writeObject("BrokerA");
                         Value input;
                         inFromServer = in.readObject();
                         if(!inFromServer.toString().equals("Stop")) {

@@ -1,8 +1,8 @@
-package com.example.distributedandroid;
+package com.example.DistributedSystems;
 
 import java.io.Serializable;
 
-class Value implements Serializable {
+public class Value implements Serializable {
 
     private Bus bus;
     private double latitude;
@@ -14,15 +14,15 @@ class Value implements Serializable {
         this.longitude = longitude;
     }
 
-    double getLatitude(){
+    public double getLatitude(){
         return latitude;
     }
 
-    double getLongitude(){
+    public double getLongitude(){
         return longitude;
     }
 
-    Bus getBus() {
+    public Bus getBus() {
         return bus;
     }
 }

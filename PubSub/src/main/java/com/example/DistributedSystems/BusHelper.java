@@ -1,4 +1,4 @@
-package com.example.distributedandroid;
+package com.example.DistributedSystems;
 
 import java.io.Serializable;
 

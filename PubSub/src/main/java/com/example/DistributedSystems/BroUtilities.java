@@ -5,17 +5,16 @@
 Μπρακούλιας Φίλιππος    3140137
 
  */
-package com.example.distributedandroid;
+package com.example.DistributedSystems;
 
 
 import java.io.*;
-import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
-class BroUtilities {
-    static ArrayList<Topic> CreateBusLines(InputStream inputStream) {
+public class BroUtilities {
+    public static ArrayList<Topic> CreateBusLines(InputStream inputStream) {
         ArrayList<Topic> topics = new ArrayList<>();
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
@@ -39,7 +38,7 @@ class BroUtilities {
         return topics;
     }
 
-    static HashMap<String, ArrayList<Topic>> MD5(ArrayList<Topic> topics) {
+    public static HashMap<String, ArrayList<Topic>> MD5(ArrayList<Topic> topics) {
         HashMap<String,ArrayList<Topic>> hashed = new HashMap<>();
         ArrayList<Topic> A = new ArrayList<>();
         ArrayList<Topic> B = new ArrayList<>();
